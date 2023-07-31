@@ -16,7 +16,7 @@ export const createNft = async (req: express.Request, res: express.Response) => 
 
 export const readNft = async (req: express.Request, res: express.Response) => {
   try {
-    const foundNft = await Nft.readNft(req.params.name);
+    const foundNft = await Nft.readNft(req.params.id);
     res.status(200).json(foundNft);
   } catch (err) {
     let errorMessage = "Failed to do something";
@@ -29,7 +29,7 @@ export const readNft = async (req: express.Request, res: express.Response) => {
 
 export const updateNft = async (req: express.Request, res: express.Response) => {
   try {
-    const updatedNft = await Nft.updateNft(req.params.name, req.body);
+    const updatedNft = await Nft.updateNft(req.params.id, req.body);
     res.status(200).send(`Updated NFT with _id: ${updatedNft.id}`);
   } catch (err) {
     let errorMessage = "Failed to do something";
@@ -42,7 +42,7 @@ export const updateNft = async (req: express.Request, res: express.Response) => 
 
 export const deleteNft = async (req: express.Request, res: express.Response) => {
   try {
-    const deletedCount = await Nft.deleteNft(req.params.name);
+    const deletedCount = await Nft.deleteNft(req.params.id);
     res.status(200).send(`Deleted ${deletedCount} NFTs.`);
   } catch (err) {
     let errorMessage = "Failed to do something";
@@ -52,3 +52,4 @@ export const deleteNft = async (req: express.Request, res: express.Response) => 
     res.status(500).send(errorMessage);
   }
 };
+
