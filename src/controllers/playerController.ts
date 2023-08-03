@@ -1,6 +1,6 @@
 import express from "express";
 import * as Player from "../models/Player";
-import { successMessage, errorMessage } from "../Helper/Responses";
+import { successMessage, errorMessage } from "../helper/Responses";
 
 export const createPlayer = async (req: express.Request, res: express.Response) => {
   try {

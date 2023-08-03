@@ -1,6 +1,6 @@
 import express from "express";
 import * as Order from "../models/NftOrder";
-import { successMessage, errorMessage } from "../Helper/Responses";
+import { successMessage, errorMessage } from "../helper/Responses";
 
 export const createOrder = async (req: express.Request, res: express.Response) => {
   try {

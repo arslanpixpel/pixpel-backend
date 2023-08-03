@@ -1,6 +1,6 @@
 import express from "express";
 import * as Developer from "../models/Developer";
-import { successMessage, errorMessage } from "../Helper/Responses";
+import { successMessage, errorMessage } from "../helper/Responses";
 
 export const createDeveloper = async (req: express.Request, res: express.Response) => {
   try {

@@ -9,8 +9,8 @@ import collectionRoutes from "./routes/collectionRoutes";
 
 const app = express();
 const port = 3000;
-const swaggerDoc = require("swagger-ui-express")
-const swaggerDocumentation = require('./helper/Documentation.ts')
+const swaggerDoc = require("swagger-ui-express");
+const swaggerDocumentation = require("./helper/Documentation.ts");
 
 app.use(cors());
 app.use(express.json());

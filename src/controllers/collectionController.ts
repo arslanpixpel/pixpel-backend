@@ -1,6 +1,6 @@
 import express from "express";
 import * as Collection from "../models/Collection";
-import { successMessage, errorMessage } from "../Helper/Responses";
+import { successMessage, errorMessage } from "../helper/Responses";
 
 export const createCollection = async (req: express.Request, res: express.Response) => {
   try {
