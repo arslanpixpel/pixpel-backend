@@ -6,6 +6,7 @@ import orderRoutes from "./routes/nftorderRoutes";
 import nftRoutes from "./routes/nftRoutes";
 import cartRoutes from "./routes/cartRoutes";
 import collectionRoutes from "./routes/collectionRoutes";
+import launchpadRoutes from "./routes/launchpadRoutes";
 
 const app = express();
 const port = 3000;
@@ -23,6 +24,7 @@ app.use("/orders", orderRoutes);
 app.use("/nfts", nftRoutes);
 app.use("/cart", cartRoutes);
 app.use("/collections", collectionRoutes);
+app.use("/launchpad", launchpadRoutes);
 
 app.listen(port, () => {
   console.log(`App listening at ${port}`);

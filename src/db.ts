@@ -56,5 +56,4 @@ createTable(
   "id SERIAL PRIMARY KEY, cancel BOOLEAN NOT NULL, cis2_amount INTEGER NOT NULL, cis2_price INTEGER NOT NULL, cliff_duration INTEGER NOT NULL, cliff_period TEXT NOT NULL, description TEXT NOT NULL, dev_paid INTEGER NOT NULL, discord_url TEXT NOT NULL, end_time TEXT NOT NULL, fb_url TEXT NOT NULL, github_url TEXT NOT NULL, hard_cap INTEGER NOT NULL, holders INTEGER NOT NULL, address TEXT NOT NULL, amount INTEGER NOT NULL, instagram_url TEXT NOT NULL, invest_amount INTEGER NOT NULL, live BOOLEAN NOT NULL, live_pause_count INTEGER NOT NULL, logo_url TEXT NOT NULL, maximum_invest INTEGER NOT NULL, minimum_invest INTEGER NOT NULL, owner TEXT NOT NULL, pause_start TEXT NOT NULL, pause_until TEXT NOT NULL, reddit_url TEXT NOT NULL, soft_cap INTEGER NOT NULL,start_time TEXT NOT NULL,telegram_url TEXT NOT NULL,title TEXT NOT NULL,token_release_data INTEGER[] NOT NULL,total_tx INTEGER NOT NULL,twitter_url TEXT NOT NULL,website_url TEXT NOT NULL"
 );
 
-
 export const query = (text: string, params: any[]) => pool.query(text, params);

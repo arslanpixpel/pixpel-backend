@@ -200,6 +200,6 @@ export const updateData = async (id: number, updates: Partial<Data>) => {
   return result.rows[0];
 };
 export const deleteData = async (id: number) => {
-    const result = await query("DELETE FROM launchpaddata WHERE id=$1", [id]);
-    return result.rowCount;
-  };
+  const result = await query("DELETE FROM launchpaddata WHERE id=$1", [id]);
+  return result.rowCount;
+};
