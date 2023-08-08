@@ -766,8 +766,8 @@ const swaggerDoc = {
         },
       },
       "requestBodies": {
-        "Pet": {
-          "description": "Pet object that needs to be added to the store",
+        "Nft": {
+          "description": "Nfts object that needs to be added to the store",
           "content": {
             "application/json": {
               "schema": {
@@ -776,24 +776,11 @@ const swaggerDoc = {
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/Pet"
+                "$ref": "#/components/schemas/Nfts"
               }
             }
           }
         },
-        "UserArray": {
-          "description": "List of user object",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
       },
       "securitySchemes": {
         "petstore_auth": {
