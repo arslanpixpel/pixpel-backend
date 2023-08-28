@@ -7,23 +7,34 @@ interface Cart {
 }
 
 export const addToCart = async (cart: Cart) => {
-  const { player_id: player_id, nft_id: nftId, developer_id: developerId } = cart;
-  const result = await query("INSERT INTO cart(player_id, nft_id, developer_id) VALUES($1, $2, $3) RETURNING *", [
-    player_id,
-    nftId,
-    developerId,
-  ]);
-  return result.rows[0];
+  try {
+    const { player_id: player_id, nft_id: nftId, developer_id: developerId } = cart;
+    const result = await query(
+      "INSERT INTO cart(player_id, nft_id, developer_id, hola) VALUES($1, $2, $3) RETURNING *",
+      [player_id, nftId, developerId]
+    );
+    return result.rows[0];
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const readCart = async (cartId: number) => {
-  const result = await query("SELECT * FROM cart WHERE id = $1", [cartId]);
-  return result.rows;
+  try {
+    const result = await query("SELECT * FROM cart WHERE id = $1", [cartId]);
+    return result.rows;
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const removeFromCart = async (cartId: number) => {
-  const result = await query("DELETE FROM cart WHERE id = $1", [cartId]);
-  return result.rowCount;
+  try {
+    const result = await query("DELETE FROM cart WHERE id = $1", [cartId]);
+    return result.rowCount;
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const moveToOrders = async (cartId: number) => {
@@ -59,6 +70,10 @@ export const moveToOrders = async (cartId: number) => {
 };
 
 export const getAllCart = async () => {
-  const result = await query("SELECT * FROM cart", []);
-  return result.rows;
+  try {
+    const result = await query("SELECT * FROM cart", []);
+    return result.rows;
+  } catch (err) {
+    throw err;
+  }
 };

@@ -41,11 +41,23 @@ export const handleDeleteResponse = (res: Response, deletedCount: number, succes
   }
 };
 
-export const handleGetAllResponse = (res: Response, allObjects: any[], successMessage: string, errorMessage: string) => {
-    if (allObjects) {
-      res.status(200).send({ message: successMessage, data: allObjects });
-    } else {
-      res.status(500).send({ error: errorMessage });
-    }
-  };
-  
+export const handleGetAllResponse = (
+  res: Response,
+  allObjects: any[],
+  successMessage: string,
+  errorMessage: string
+) => {
+  if (allObjects) {
+    res.status(200).send({ message: successMessage, data: allObjects });
+  } else {
+    res.status(500).send({ error: errorMessage });
+  }
+};
+
+export const handleError = (err: any, res: Response) => {
+  let errorMessage = "Failed to do something";
+  if (err instanceof Error) {
+    errorMessage = err.message;
+  }
+  res.status(500).send(errorMessage);
+}

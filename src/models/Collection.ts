@@ -6,25 +6,45 @@ interface Collection {
 }
 
 export const createCollection = async (collection: Collection) => {
-  const { developer_id, name } = collection;
-  const result = await query("INSERT INTO collections(developer_id, name) VALUES($1, $2) RETURNING *", [
-    developer_id,
-    name,
-  ]);
-  return result.rows[0];
+  try {
+    const { developer_id, name } = collection;
+    const result = await query("INSERT INTO collections(developer_id, name) VALUES($1, $2) RETURNING *", [
+      developer_id,
+      name,
+    ]);
+    return result.rows[0];
+  } catch (err) {
+    const error = err as Error;
+    throw error;
+  }
 };
 
 export const readCollectionsByDeveloper = async (developerId: number) => {
-  const result = await query("SELECT * FROM collections WHERE developer_id = $1", [developerId]);
-  return result.rows;
+  try {
+    const result = await query("SELECT * FROM collections WHERE developer_id = $1", [developerId]);
+    return result.rows;
+  } catch (err) {
+    const error = err as Error;
+    throw error;
+  }
 };
 
 export const deleteCollection = async (id: number) => {
-  const result = await query("DELETE FROM collections WHERE id = $1", [id]);
-  return result.rowCount;
+  try {
+    const result = await query("DELETE FROM collections WHERE id = $1", [id]);
+    return result.rowCount;
+  } catch (err) {
+    const error = err as Error;
+    throw error;
+  }
 };
 
 export const getAllCollections = async () => {
-  const result = await query("SELECT * FROM collections", []);
-  return result.rows;
+  try {
+    const result = await query("SELECT * FROM collections", []);
+    return result.rows;
+  } catch (err) {
+    const error = err as Error;
+    throw error;
+  }
 };

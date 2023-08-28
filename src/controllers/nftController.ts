@@ -1,56 +1,49 @@
 import express from "express";
 import * as Nft from "../models/Nft";
-import { handleCreateResponse, handleReadResponse, handleUpdateResponse, handleDeleteResponse, handleGetAllResponse, successMessage, errorMessage } from "../helper/Responses";
+import {
+  handleCreateResponse,
+  handleReadResponse,
+  handleUpdateResponse,
+  handleDeleteResponse,
+  handleGetAllResponse,
+  successMessage,
+  errorMessage,
+  handleError,
+} from "../helper/Responses";
 
 export const createNft = async (req: express.Request, res: express.Response) => {
   try {
     const nft = await Nft.createNft(req.body);
-    handleCreateResponse(res, nft, "Inserted NFT", "Failed to insert NFT");
+    handleCreateResponse(res, nft, successMessage, errorMessage);
   } catch (err) {
-    let errorMessage = "Failed to do something";
-    if (err instanceof Error) {
-      errorMessage = err.message;
-    }
-    res.status(500).send(errorMessage);
+    handleError(err, res);
   }
 };
 
 export const readNft = async (req: express.Request, res: express.Response) => {
   try {
     const foundNft = await Nft.readNft(req.params.id);
-    handleReadResponse(res, foundNft, "Found NFT", "Failed to find NFT");
+    handleReadResponse(res, foundNft, successMessage, errorMessage);
   } catch (err) {
-    let errorMessage = "Failed to do something";
-    if (err instanceof Error) {
-      errorMessage = err.message;
-    }
-    res.status(500).send(errorMessage);
+    handleError(err, res);
   }
 };
 
 export const updateNft = async (req: express.Request, res: express.Response) => {
   try {
     const updatedNft = await Nft.updateNft(req.params.id, req.body);
-    handleUpdateResponse(res, updatedNft, "Updated NFT", "Failed to update NFT");
+    handleUpdateResponse(res, updatedNft, successMessage, errorMessage);
   } catch (err) {
-    let errorMessage = "Failed to do something";
-    if (err instanceof Error) {
-      errorMessage = err.message;
-    }
-    res.status(500).send(errorMessage);
+    handleError(err, res);
   }
 };
 
 export const deleteNft = async (req: express.Request, res: express.Response) => {
   try {
     const deletedCount = await Nft.deleteNft(req.params.id);
-    handleDeleteResponse(res, deletedCount, "Deleted NFTs", "Failed to delete NFTs");
+    handleDeleteResponse(res, deletedCount, successMessage, errorMessage);
   } catch (err) {
-    let errorMessage = "Failed to do something";
-    if (err instanceof Error) {
-      errorMessage = err.message;
-    }
-    res.status(500).send(errorMessage);
+    handleError(err, res);
   }
 };
 
@@ -59,6 +52,6 @@ export const getAllNfts = async (_req: express.Request, res: express.Response) =
     const allNfts = await Nft.getAllNfts();
     handleGetAllResponse(res, allNfts, successMessage, errorMessage);
   } catch (err) {
-    res.status(500).send({ error: errorMessage });
+    handleError(err, res);
   }
 };

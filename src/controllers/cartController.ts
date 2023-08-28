@@ -1,6 +1,6 @@
 import express from "express";
 import * as Cart from "../models/Cart";
-import { successMessage, errorMessage, handleGetAllResponse } from "../helper/Responses";
+import { successMessage, errorMessage, handleGetAllResponse, handleError } from "../helper/Responses";
 import { handleCreateResponse, handleReadResponse, handleDeleteResponse } from "../helper/Responses";
 
 export const addToCart = async (req: express.Request, res: express.Response) => {
@@ -8,7 +8,7 @@ export const addToCart = async (req: express.Request, res: express.Response) => 
     const cart = await Cart.addToCart(req.body);
     handleCreateResponse(res, cart, successMessage, errorMessage);
   } catch (err) {
-    res.status(500).send({ error: errorMessage });
+    handleError(err, res);
   }
 };
 
@@ -17,7 +17,7 @@ export const readCart = async (req: express.Request, res: express.Response) => {
     const cartItems = await Cart.readCart(parseInt(req.params.cartId));
     handleReadResponse(res, cartItems, successMessage, errorMessage);
   } catch (err) {
-    res.status(500).send({ error: errorMessage });
+    handleError(err, res);
   }
 };
 
@@ -26,7 +26,7 @@ export const removeFromCart = async (req: express.Request, res: express.Response
     const deletedCount = await Cart.removeFromCart(parseInt(req.params.cartId));
     handleDeleteResponse(res, deletedCount, successMessage, errorMessage);
   } catch (err) {
-    res.status(500).send({ error: errorMessage });
+    handleError(err, res);
   }
 };
 
@@ -37,7 +37,7 @@ export const moveToOrders = async (req: express.Request, res: express.Response) 
       .status(200)
       .send({ message: successMessage, data: `Moved items from cart with ID: ${req.params.cartId} to orders` });
   } catch (err) {
-    res.status(500).send({ error: errorMessage });
+    handleError(err, res);
   }
 };
 
@@ -46,6 +46,6 @@ export const getAllCart = async (_req: express.Request, res: express.Response) =
     const allCartItems = await Cart.getAllCart();
     handleGetAllResponse(res, allCartItems, successMessage, errorMessage);
   } catch (err) {
-    res.status(500).send({ error: errorMessage });
+    handleError(err, res);
   }
 };
