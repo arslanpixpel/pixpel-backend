@@ -205,3 +205,9 @@ export const deleteData = async (id: number) => {
   const result = await query("DELETE FROM launchpad_data WHERE id=$1", [id]);
   return result.rowCount;
 };
+
+export const getAllLaunchpadData = async () => {
+  const result = await query("SELECT * FROM launchpad_data",[]);
+  return result.rows;
+};
+

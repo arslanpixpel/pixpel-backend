@@ -34,3 +34,8 @@ export const deleteTokenReleaseData = async (id: number) => {
   const result = await query("DELETE FROM token_release_data WHERE id = $1", [id]);
   return result.rowCount;
 };
+
+export const getAllTokenReleaseData = async () => {
+  const result = await query("SELECT * FROM token_release_data", []);
+  return result.rows;
+};

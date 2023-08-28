@@ -7,5 +7,6 @@ router.post("/create", launchpadController.createData);
 router.get("/read/:id", launchpadController.readData);
 router.put("/update/:id", launchpadController.updateData);
 router.delete("/delete/:id", launchpadController.deleteData);
+router.get("/getAll", launchpadController.getAllLaunchpadData);
 
 export default router;

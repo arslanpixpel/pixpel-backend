@@ -23,3 +23,8 @@ export const deleteCollection = async (id: number) => {
   const result = await query("DELETE FROM collections WHERE id = $1", [id]);
   return result.rowCount;
 };
+
+export const getAllCollections = async () => {
+  const result = await query("SELECT * FROM collections", []);
+  return result.rows;
+};

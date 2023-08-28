@@ -1,11 +1,12 @@
 import express from "express";
 import * as Cart from "../models/Cart";
-import { successMessage, errorMessage } from "../helper/Responses";
+import { successMessage, errorMessage, handleGetAllResponse } from "../helper/Responses";
+import { handleCreateResponse, handleReadResponse, handleDeleteResponse } from "../helper/Responses";
 
 export const addToCart = async (req: express.Request, res: express.Response) => {
   try {
     const cart = await Cart.addToCart(req.body);
-    res.status(201).send({ message: successMessage, data: `Added NFT with _id: ${cart.nft_id} to cart` });
+    handleCreateResponse(res, cart, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }
@@ -14,7 +15,7 @@ export const addToCart = async (req: express.Request, res: express.Response) => 
 export const readCart = async (req: express.Request, res: express.Response) => {
   try {
     const cartItems = await Cart.readCart(parseInt(req.params.cartId));
-    res.status(200).send({ message: successMessage, data: cartItems });
+    handleReadResponse(res, cartItems, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }
@@ -23,7 +24,7 @@ export const readCart = async (req: express.Request, res: express.Response) => {
 export const removeFromCart = async (req: express.Request, res: express.Response) => {
   try {
     const deletedCount = await Cart.removeFromCart(parseInt(req.params.cartId));
-    res.status(200).send({ message: successMessage, data: `Removed ${deletedCount} items from cart.` });
+    handleDeleteResponse(res, deletedCount, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }
@@ -35,6 +36,15 @@ export const moveToOrders = async (req: express.Request, res: express.Response) 
     res
       .status(200)
       .send({ message: successMessage, data: `Moved items from cart with ID: ${req.params.cartId} to orders` });
+  } catch (err) {
+    res.status(500).send({ error: errorMessage });
+  }
+};
+
+export const getAllCart = async (_req: express.Request, res: express.Response) => {
+  try {
+    const allCartItems = await Cart.getAllCart();
+    handleGetAllResponse(res, allCartItems, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }

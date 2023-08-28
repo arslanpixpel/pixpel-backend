@@ -57,3 +57,8 @@ export const moveToOrders = async (cartId: number) => {
     throw err;
   }
 };
+
+export const getAllCart = async () => {
+  const result = await query("SELECT * FROM cart", []);
+  return result.rows;
+};

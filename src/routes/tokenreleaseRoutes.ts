@@ -7,5 +7,6 @@ router.post("/create", tokenReleaseDataController.createTokenReleaseData);
 router.get("/read/:id", tokenReleaseDataController.readTokenReleaseData);
 router.put("/update/:id", tokenReleaseDataController.updateTokenReleaseData);
 router.delete("/delete/:id", tokenReleaseDataController.deleteTokenReleaseData);
+router.get("/getAll", tokenReleaseDataController.getAllTokenReleaseData);
 
 export default router;

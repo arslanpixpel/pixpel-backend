@@ -1,11 +1,12 @@
 import express from "express";
 import * as Collection from "../models/Collection";
-import { successMessage, errorMessage } from "../helper/Responses";
+import { successMessage, errorMessage, handleGetAllResponse } from "../helper/Responses";
+import { handleCreateResponse, handleReadResponse, handleDeleteResponse } from "../helper/Responses";
 
 export const createCollection = async (req: express.Request, res: express.Response) => {
   try {
     const collection = await Collection.createCollection(req.body);
-    res.status(201).send({ message: successMessage, data: `Created collection with _id: ${collection.id}` });
+    handleCreateResponse(res, collection, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }
@@ -14,7 +15,7 @@ export const createCollection = async (req: express.Request, res: express.Respon
 export const readCollectionsByDeveloper = async (req: express.Request, res: express.Response) => {
   try {
     const collections = await Collection.readCollectionsByDeveloper(parseInt(req.params.developerId));
-    res.status(200).send({ message: successMessage, data: collections });
+    handleReadResponse(res, collections, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }
@@ -23,7 +24,16 @@ export const readCollectionsByDeveloper = async (req: express.Request, res: expr
 export const deleteCollection = async (req: express.Request, res: express.Response) => {
   try {
     const deletedCount = await Collection.deleteCollection(parseInt(req.params.id));
-    res.status(200).send({ message: successMessage, data: `Deleted ${deletedCount} collections.` });
+    handleDeleteResponse(res, deletedCount, successMessage, errorMessage);
+  } catch (err) {
+    res.status(500).send({ error: errorMessage });
+  }
+};
+
+export const getAllCollections = async (_req: express.Request, res: express.Response) => {
+  try {
+    const allCollections = await Collection.getAllCollections();
+    handleGetAllResponse(res, allCollections, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }

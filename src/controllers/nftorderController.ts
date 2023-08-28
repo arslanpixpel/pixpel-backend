@@ -1,11 +1,12 @@
 import express from "express";
 import * as Order from "../models/NftOrder";
-import { successMessage, errorMessage } from "../helper/Responses";
+import { successMessage, errorMessage, handleGetAllResponse } from "../helper/Responses";
+import { handleCreateResponse, handleReadResponse, handleUpdateResponse, handleDeleteResponse } from "../helper/Responses";
 
 export const createOrder = async (req: express.Request, res: express.Response) => {
   try {
     const order = await Order.createOrder(req.body);
-    res.status(201).send({ message: successMessage, data: `Created order with _id: ${order.id}` });
+    handleCreateResponse(res, order, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }
@@ -14,7 +15,7 @@ export const createOrder = async (req: express.Request, res: express.Response) =
 export const readOrder = async (req: express.Request, res: express.Response) => {
   try {
     const order = await Order.readOrder(parseInt(req.params.id));
-    res.status(200).send({ message: successMessage, data: order });
+    handleReadResponse(res, order, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }
@@ -23,7 +24,7 @@ export const readOrder = async (req: express.Request, res: express.Response) => 
 export const updateOrder = async (req: express.Request, res: express.Response) => {
   try {
     const order = await Order.updateOrder(parseInt(req.params.id), req.body);
-    res.status(200).send({ message: successMessage, data: order });
+    handleUpdateResponse(res, order, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }
@@ -32,8 +33,18 @@ export const updateOrder = async (req: express.Request, res: express.Response) =
 export const deleteOrder = async (req: express.Request, res: express.Response) => {
   try {
     const deletedCount = await Order.deleteOrder(parseInt(req.params.id));
-    res.status(200).send({ message: successMessage, data: `Deleted ${deletedCount} orders.` });
+    handleDeleteResponse(res, deletedCount, successMessage, errorMessage);
   } catch (err) {
     res.status(500).send({ error: errorMessage });
   }
 };
+
+export const getAllNftOrders = async (_req: express.Request, res: express.Response) => {
+  try {
+    const allNftOrders = await Order.getAllNftOrders();
+    handleGetAllResponse(res, allNftOrders, successMessage, errorMessage);
+  } catch (err) {
+    res.status(500).send({ error: errorMessage });
+  }
+};
+

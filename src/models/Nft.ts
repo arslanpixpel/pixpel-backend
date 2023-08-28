@@ -37,3 +37,8 @@ export const deleteNft = async (name: string) => {
   const result = await query("DELETE FROM nfts WHERE name = $1", [name]);
   return result.rowCount;
 };
+
+export const getAllNfts = async () => {
+  const result = await query("SELECT * FROM nfts", []);
+  return result.rows;
+};
