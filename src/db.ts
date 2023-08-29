@@ -1,10 +1,10 @@
 import { Pool } from "pg";
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
+  user: "ubuntu",
+  host: "127.0.0.1",
   database: "postgres",
-  password: "Cubicus123",
+  password: "ubuntu",
   port: 5432,
 });
 
@@ -24,11 +24,11 @@ const createTable = async (tableName: string, columns: string) => {
   }
 };
 
-createTable("players", "id SERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, wallet TEXT NOT NULL");
+createTable("players", "id SERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, wallet TEXT NOT NULL, password TEXT NOT NULL");
 
 createTable(
   "developers",
-  "id SERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, wallet TEXT NOT NULL, contact_details INTEGER NULL"
+  "id SERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, wallet TEXT NOT NULL, contact_details BIGINT NULL, password TEXT NOT NULL"
 );
 
 createTable(

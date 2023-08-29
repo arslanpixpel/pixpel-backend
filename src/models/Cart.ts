@@ -9,10 +9,11 @@ interface Cart {
 export const addToCart = async (cart: Cart) => {
   try {
     const { player_id: player_id, nft_id: nftId, developer_id: developerId } = cart;
-    const result = await query(
-      "INSERT INTO cart(player_id, nft_id, developer_id, hola) VALUES($1, $2, $3) RETURNING *",
-      [player_id, nftId, developerId]
-    );
+    const result = await query("INSERT INTO cart(player_id, nft_id, developer_id) VALUES($1, $2, $3) RETURNING *", [
+      player_id,
+      nftId,
+      developerId,
+    ]);
     return result.rows[0];
   } catch (err) {
     throw err;
@@ -41,7 +42,11 @@ export const moveToOrders = async (cartId: number) => {
   await query("BEGIN", []);
 
   try {
-    const cartItems = await readCart(cartId);
+    let cartItems = await readCart(cartId);
+
+    if (cartItems.length === 0) {
+      throw new Error("Cart ID does not exist or cart is empty");
+    }
 
     for (const item of cartItems) {
       const playerResult = await query("SELECT name FROM players WHERE id = $1", [item.player_id]);
