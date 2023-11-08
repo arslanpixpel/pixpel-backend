@@ -9,5 +9,6 @@ router.delete("/delete/:id", playerController.deletePlayer);
 router.get("/getAll", playerController.getAllPlayers);
 router.post("/signup", playerController.signupPlayer);
 router.post("/signin", playerController.signinPlayer);
+router.get("/hello", playerController.hello);
 
 export default router;

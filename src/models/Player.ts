@@ -48,7 +48,9 @@ export const deletePlayer = async (id: number) => {
 
 export const getAllPlayers = async () => {
   try {
+    console.log("haha");
     const result = await query("SELECT * FROM players", []);
+    console.log("haha2");
     return result.rows;
   } catch (err) {
     const error = err as Error;
@@ -56,7 +58,12 @@ export const getAllPlayers = async () => {
   }
 };
 
-export const signupPlayer = async (player: { name: string; email: string; wallet: string; password: string }) => {
+export const signupPlayer = async (player: {
+  name: string;
+  email: string;
+  wallet: string;
+  password: string;
+}) => {
   try {
     const { name, email, wallet, password } = player;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -73,7 +80,9 @@ export const signupPlayer = async (player: { name: string; email: string; wallet
 
 export const signinPlayer = async (email: string, password: string) => {
   try {
-    const result = await query("SELECT * FROM players WHERE email = $1", [email]);
+    const result = await query("SELECT * FROM players WHERE email = $1", [
+      email,
+    ]);
     const player = result.rows[0];
     if (player && (await bcrypt.compare(password, player.password))) {
       return player;

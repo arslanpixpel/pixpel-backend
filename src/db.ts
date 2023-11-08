@@ -1,9 +1,9 @@
 import { Pool } from "pg";
 
 const pool = new Pool({
-  user: "ubuntu",
+  user: "hassankhan",
   host: "127.0.0.1",
-  database: "postgres",
+  database: "Pixpel-backend",
   password: "ubuntu",
   port: 5432,
 });
@@ -24,7 +24,10 @@ const createTable = async (tableName: string, columns: string) => {
   }
 };
 
-createTable("players", "id SERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, wallet TEXT NOT NULL, password TEXT NOT NULL");
+createTable(
+  "players",
+  "id SERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, wallet TEXT NOT NULL, password TEXT NOT NULL"
+);
 
 createTable(
   "developers",
@@ -62,3 +65,95 @@ createTable(
 );
 
 export const query = (text: string, params: any[]) => pool.query(text, params);
+
+// import { Pool } from "pg";
+
+// const pool = new Pool({
+//   user: "postgres",
+//   host: "127.0.0.1",
+//   database: "postgres",
+//   password: "postgres",
+//   port: 5050,
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// });
+
+// const connectDB = async () => {
+//   try {
+//     await pool.connect();
+//     console.log("Database connected successfully");
+//   } catch (err: any) {
+//     console.error("Database connection error", err);
+//   }
+// };
+
+// connectDB();
+
+// const createTable = async (tableName: string, columns: string) => {
+//   try {
+//     const result = await pool.query(
+//       `
+//           SELECT EXISTS (
+//               SELECT FROM information_schema.tables
+//               WHERE table_name = $1
+//           )
+//       `,
+//       [tableName]
+//     );
+//     const tableExists = result.rows[0].exists;
+//     if (!tableExists) {
+//       await pool.query(`CREATE TABLE ${tableName} (${columns})`);
+//       console.log(`Table ${tableName} created successfully.`);
+//     }
+//   } catch (error) {
+//     console.error(`Error creating table ${tableName}:`, error);
+//   }
+// };
+
+// const createTables = async () => {
+//   try {
+//     await createTable(
+//       "users",
+//       "id SERIAL PRIMARY KEY , name TEXT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL"
+//     );
+//     await pool.query(
+//       `INSERT INTO users (name, email, password) VALUES ('John Doe', 'john@example.com', 'password'), ('Jane Doe', 'jane@example.com', 'password'), ('Alice', 'alice@example.com', 'password'), ('Bob', 'bob@example.com', 'password'), ('Charlie', 'charlie@example.com', 'password');`
+//     );
+
+//     await createTable(
+//       "collection",
+//       "id SERIAL PRIMARY KEY, name TEXT, description TEXT, primary_owner INTEGER REFERENCES users(id)"
+//     );
+//     await pool.query(
+//       `INSERT INTO collection (name, description, primary_owner) VALUES ('Collection 1', 'Description 1', 1), ('Collection 2', 'Description 2', 2), ('Collection 3', 'Description 3', 3), ('Collection 4', 'Description 4', 4), ('Collection 5', 'Description 5', 5);`
+//     );
+
+//     await createTable(
+//       "nfts",
+//       "id SERIAL PRIMARY KEY, name TEXT, nft_url TEXT, description TEXT, royalties TEXT, size TEXT, properties TEXT, price TEXT, on_sale BOOLEAN, primary_owner INTEGER REFERENCES users(id), current_owner INTEGER REFERENCES users(id)"
+//     );
+//     await pool.query(
+//       `INSERT INTO nfts (name, nft_url, description, royalties, size, properties, price, on_sale, primary_owner, current_owner) VALUES ('NFT 1', 'url1.com', 'Description 1', '10%', '100x100', 'Properties 1', '$1000', true, 1, 1), ('NFT 2', 'url2.com', 'Description 2', '20%', '200x200', 'Properties 2', '$2000', false, 2, 2), ('NFT 3', 'url3.com', 'Description 3', '30%', '300x300', 'Properties 3', '$3000', true, 3, 3), ('NFT 4', 'url4.com', 'Description 4', '40%', '400x400', 'Properties 4', '$4000', false, 4, 4), ('NFT 5', 'url5.com', 'Description 5', '50%', '500x500', 'Properties 5', '$5000', true, 5, 5);`
+//     );
+
+//     await createTable(
+//       "nft_collection",
+//       "id SERIAL UNIQUE, collection_id INTEGER REFERENCES collection(id), nft_id INTEGER REFERENCES nfts(id), PRIMARY KEY (collection_id, nft_id)"
+//     );
+//     await pool.query(`
+//     INSERT INTO nft_collection (collection_id, nft_id)
+//     VALUES (1,1), (2,2), (3,3), (4,4), (5,5)
+//     ON CONFLICT (collection_id, nft_id)
+//     DO UPDATE SET collection_id = EXCLUDED.collection_id, nft_id = EXCLUDED.nft_id;
+//   `);
+
+//     console.log("Dummy data inserted successfully.");
+//   } catch (error) {
+//     console.error("Error creating tables:", error);
+//   }
+// };
+
+// createTables();
+
+// export const query = (text: string, params: any[]) => pool.query(text, params);
