@@ -11,13 +11,24 @@ export const handleCreateResponse = (
   errorMessage: string
 ) => {
   if (createdObject) {
-    res.status(201).send({ message: successMessage, data: `Created object with _id: ${createdObject.id}` });
+    res
+      .status(201)
+      .send({
+        message: successMessage,
+        data: `Created object with _id: ${createdObject.id}`,
+        responce: createdObject,
+      });
   } else {
     res.status(500).send({ error: errorMessage });
   }
 };
 
-export const handleReadResponse = (res: Response, readObject: any, successMessage: string, error: string) => {
+export const handleReadResponse = (
+  res: Response,
+  readObject: any,
+  successMessage: string,
+  error: string
+) => {
   if (readObject) {
     res.status(200).send({ message: successMessage, data: readObject });
   } else {
@@ -25,7 +36,12 @@ export const handleReadResponse = (res: Response, readObject: any, successMessag
   }
 };
 
-export const handleUpdateResponse = (res: Response, updatedObject: any, successMessage: string, error: string) => {
+export const handleUpdateResponse = (
+  res: Response,
+  updatedObject: any,
+  successMessage: string,
+  error: string
+) => {
   if (updatedObject) {
     res.status(200).send({ message: successMessage, data: updatedObject });
   } else {
@@ -33,9 +49,19 @@ export const handleUpdateResponse = (res: Response, updatedObject: any, successM
   }
 };
 
-export const handleDeleteResponse = (res: Response, deletedCount: number, successMessage: string, error: string) => {
+export const handleDeleteResponse = (
+  res: Response,
+  deletedCount: number,
+  successMessage: string,
+  error: string
+) => {
   if (deletedCount > 0) {
-    res.status(200).send({ message: successMessage, data: `Deleted ${deletedCount} developers.` });
+    res
+      .status(200)
+      .send({
+        message: successMessage,
+        data: `Deleted ${deletedCount} developers.`,
+      });
   } else {
     res.status(404).send({ error: error });
   }
@@ -60,4 +86,4 @@ export const handleError = (err: any, res: Response) => {
     errorMessage = err.message;
   }
   res.status(500).send(errorMessage);
-}
+};

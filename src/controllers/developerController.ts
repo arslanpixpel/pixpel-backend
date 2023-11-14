@@ -1,13 +1,21 @@
 import express from "express";
 import * as Developer from "../models/Developer";
-import { successMessage, errorMessage, handleGetAllResponse, handleError } from "../helper/Responses";
+import {
+  successMessage,
+  errorMessage,
+  handleGetAllResponse,
+  handleError,
+} from "../helper/Responses";
 import {
   handleReadResponse,
   handleUpdateResponse,
   handleDeleteResponse,
 } from "../helper/Responses";
 
-export const readDeveloper = async (req: express.Request, res: express.Response) => {
+export const readDeveloper = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
     const developer = await Developer.readDeveloper(parseInt(req.params.id));
     handleReadResponse(res, developer, successMessage, errorMessage);
@@ -16,25 +24,39 @@ export const readDeveloper = async (req: express.Request, res: express.Response)
   }
 };
 
-export const updateDeveloper = async (req: express.Request, res: express.Response) => {
+export const updateDeveloper = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
-    const developer = await Developer.updateDeveloper(parseInt(req.params.id), req.body);
+    const developer = await Developer.updateDeveloper(
+      parseInt(req.params.id),
+      req.body
+    );
     handleUpdateResponse(res, developer, successMessage, errorMessage);
   } catch (err) {
     handleError(err, res);
   }
 };
 
-export const deleteDeveloper = async (req: express.Request, res: express.Response) => {
+export const deleteDeveloper = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
-    const deletedCount = await Developer.deleteDeveloper(parseInt(req.params.id));
+    const deletedCount = await Developer.deleteDeveloper(
+      parseInt(req.params.id)
+    );
     handleDeleteResponse(res, deletedCount, successMessage, errorMessage);
   } catch (err) {
     handleError(err, res);
   }
 };
 
-export const getAllDevelopers = async (_req: express.Request, res: express.Response) => {
+export const getAllDevelopers = async (
+  _req: express.Request,
+  res: express.Response
+) => {
   try {
     const allDevelopers = await Developer.getAllDevelopers();
     handleGetAllResponse(res, allDevelopers, successMessage, errorMessage);
@@ -43,21 +65,31 @@ export const getAllDevelopers = async (_req: express.Request, res: express.Respo
   }
 };
 
-export const signupDeveloper = async (req: express.Request, res: express.Response) => {
+export const signupDeveloper = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
     const developer = await Developer.signupDeveloper(req.body);
-    res.status(201).send({ message: "Developer signed up successfully", data: developer });
+    res
+      .status(201)
+      .send({ message: "Developer signed up successfully", data: developer });
   } catch (err) {
     handleError(err, res);
   }
 };
 
-export const signinDeveloper = async (req: express.Request, res: express.Response) => {
+export const signinDeveloper = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
     const { email, password } = req.body;
     const developer = await Developer.signinDeveloper(email, password);
     if (developer) {
-      res.status(200).send({ message: "Developer signed in successfully", data: developer });
+      res
+        .status(200)
+        .send({ message: "Developer signed in successfully", data: developer });
     } else {
       res.status(401).send({ error: "Invalid email or password" });
     }

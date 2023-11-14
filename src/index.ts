@@ -8,9 +8,10 @@ import cartRoutes from "./routes/cartRoutes";
 import collectionRoutes from "./routes/collectionRoutes";
 import launchpadRoutes from "./routes/launchpadRoutes";
 import tokenreleaseRoutes from "./routes/tokenreleaseRoutes";
+import gamedashboard from "./routes/gamedashboard";
 
 const app = express();
-const port = 3000;
+const port = 3001;
 const swaggerDoc = require("swagger-ui-express");
 const swaggerDocumentation = require("./helper/Documentation.ts");
 
@@ -27,6 +28,7 @@ app.use("/cart", cartRoutes);
 app.use("/collections", collectionRoutes);
 app.use("/launchpad", launchpadRoutes);
 app.use("/tokenrelease", tokenreleaseRoutes);
+app.use("/gamedashboard", gamedashboard);
 
 app.listen(port, () => {
   console.log(`App listening at ${port}`);
