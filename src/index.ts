@@ -19,20 +19,21 @@ const upload = require("./routes/upload");
 const swaggerDocumentation = require("./helper/Documentation.ts");
 
 app.use(cors());
+app.options('*', cors());
 app.use(express.json());
 app.use("/documentations", swaggerDoc.serve);
 app.use("/documentations", swaggerDoc.setup(swaggerDocumentation));
 
-app.use(
-  fileUpload({
-    useTempFiles: false,
-    safeFileNames: true,
-    preserveExtension: true,
-    tempFileDir: `${__dirname}/uploads/`,
-  })
-);
-app.use("/", upload);
-app.use("/pinata", pinata);
+// app.use(
+//   fileUpload({
+//     useTempFiles: false,
+//     safeFileNames: true,
+//     preserveExtension: true,
+//     tempFileDir: `${__dirname}/uploads/`,
+//   })
+// );
+// app.use("/", upload);
+// app.use("/pinata", pinata);
 
 app.use("/developers", developerRoutes);
 app.use("/players", playerRoutes);
