@@ -11,11 +11,11 @@ import tokenreleaseRoutes from "./routes/tokenreleaseRoutes";
 import gamedashboard from "./routes/gamedashboard";
 
 const app = express();
-const port = 3001;
+const port = 3000;
 const swaggerDoc = require("swagger-ui-express");
-const fileUpload = require("express-fileupload");
-const pinata = require("./routes/pinata");
-const upload = require("./routes/upload");
+// const fileUpload = require("express-fileupload");
+// const pinata = require("./routes/pinata");
+// const upload = require("./routes/upload");
 const swaggerDocumentation = require("./helper/Documentation.ts");
 
 app.use(cors());
