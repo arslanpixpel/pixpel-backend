@@ -17,6 +17,8 @@ interface Nft {
   primary_owner: string;
   secondary_owner: string;
   type: "mystery" | "open";
+  category: string;
+  img: string,
   collection_id: number;
   kind: string;
   properties: Record<string, any>;
@@ -81,6 +83,8 @@ export const createNft = async (nft: Nft) => {
       primary_owner,
       secondary_owner,
       type,
+      category,
+      img,
       collection_id,
       kind,
       properties,
@@ -96,14 +100,15 @@ export const createNft = async (nft: Nft) => {
     } = nft;
 
     const result = await query(
-      `
-      INSERT INTO nfts(
+      `INSERT INTO nfts(
         name,
         description,
         royalty_commission,
         primary_owner,
         secondary_owner,
         type,
+        category,
+        img,
         collection_id,
         kind,
         properties,
@@ -116,7 +121,7 @@ export const createNft = async (nft: Nft) => {
         open_auction,
         fix_price,
         mystery_box
-      ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+      ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
       RETURNING *
       `,
       [
@@ -126,6 +131,8 @@ export const createNft = async (nft: Nft) => {
         primary_owner,
         secondary_owner,
         type,
+        category,
+        img,
         collection_id,
         kind,
         properties,
@@ -140,7 +147,7 @@ export const createNft = async (nft: Nft) => {
         mystery_box,
       ]
     );
-
+    
     return result.rows[0];
   } catch (err) {
     const error = err as Error;
@@ -190,11 +197,14 @@ export const readNft = async (id: number) => {
 export const updateNft = async (name: string, updates: Partial<Nft>) => {
   try {
     const {
+      name,
       description,
       royalty_commission,
       primary_owner,
       secondary_owner,
       type,
+      category,
+      img,
       collection_id,
       kind,
       properties,
@@ -240,6 +250,8 @@ export const updateNft = async (name: string, updates: Partial<Nft>) => {
         secondary_owner,
         type,
         collection_id,
+        category,
+        img,
         kind,
         properties,
         blockchain,
