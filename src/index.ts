@@ -10,11 +10,12 @@ import launchpadRoutes from "./routes/launchpadRoutes";
 import tokenreleaseRoutes from "./routes/tokenreleaseRoutes";
 import gamedashboard from "./routes/gamedashboard";
 
+
 const app = express();
-const port = 3000;
+const port = 3001;
 const swaggerDoc = require("swagger-ui-express");
 // const fileUpload = require("express-fileupload");
-// const pinata = require("./routes/pinata");
+const pinata = require("./routes/pinata");
 // const upload = require("./routes/upload");
 const swaggerDocumentation = require("./helper/Documentation.ts");
 
@@ -33,7 +34,7 @@ app.use("/documentations", swaggerDoc.setup(swaggerDocumentation));
 //   })
 // );
 // app.use("/", upload);
-// app.use("/pinata", pinata);
+app.use("/pinata", pinata);
 
 app.use("/developers", developerRoutes);
 app.use("/players", playerRoutes);
