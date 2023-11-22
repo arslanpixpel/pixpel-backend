@@ -19,6 +19,16 @@ export const createCollection = async (collection: Collection) => {
   }
 };
 
+export const readCollectionsByCollectionId = async (collectionId: number) => {
+  try {
+    const result = await query("SELECT * FROM collections WHERE id = $1", [collectionId]);
+    return result.rows;
+  } catch (err) {
+    const error = err as Error;
+    throw error;
+  }
+};
+
 export const readCollectionsByDeveloper = async (developerId: number) => {
   try {
     const result = await query("SELECT * FROM collections WHERE developer_id = $1", [developerId]);

@@ -3,7 +3,7 @@ import { Pool } from "pg";
 const pool = new Pool({
   user: "postgres",
   host: "127.0.0.1",
-  database: "Pixpel-backend",
+  database: "postgres",
   password: "ubuntu",
   port: 5432,
 });
@@ -24,16 +24,50 @@ const createTable = async (tableName: string, columns: string) => {
   }
 };
 
+// Assuming createTable is a function that executes SQL statements
 createTable(
   "players",
-  "id SERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, wallet TEXT NOT NULL, password TEXT NOT NULL"
+  `
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  wallet TEXT NOT NULL,
+  contact_details BIGINT NULL,
+  password TEXT NOT NULL,
+  verified BOOLEAN DEFAULT FALSE NOT NULL,
+  img TEXT DEFAULT NULL,
+  address TEXT DEFAULT NULL,
+  dateOfLaunch DATE DEFAULT CURRENT_DATE NOT NULL,
+  country TEXT DEFAULT NULL,
+  launchedAtPixpel TEXT DEFAULT 'No',
+  legalName TEXT DEFAULT NULL,
+  perPercentage TEXT DEFAULT NULL,
+  percentage TEXT DEFAULT NULL,
+  shareHolders TEXT DEFAULT NULL
+  `
 );
 
 createTable(
   "developers",
-  "id SERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT NOT NULL, wallet TEXT NOT NULL, contact_details BIGINT NULL, password TEXT NOT NULL"
+  `
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  wallet TEXT NOT NULL,
+  contact_details BIGINT NULL,
+  password TEXT NOT NULL,
+  verified BOOLEAN DEFAULT FALSE NOT NULL,
+  img TEXT DEFAULT NULL,
+  address TEXT DEFAULT NULL,
+  dateOfLaunch DATE DEFAULT CURRENT_DATE NOT NULL,
+  country TEXT DEFAULT NULL,
+  launchedAtPixpel TEXT DEFAULT 'No',
+  legalName TEXT DEFAULT NULL,
+  perPercentage TEXT DEFAULT NULL,
+  percentage TEXT DEFAULT NULL,
+  shareHolders TEXT DEFAULT NULL
+  `
 );
-
 createTable(
   "collections",
   "id SERIAL PRIMARY KEY, developer_id INTEGER NOT NULL REFERENCES developers(id), name TEXT NOT NULL"

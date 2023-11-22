@@ -12,6 +12,15 @@ export const createCollection = async (req: express.Request, res: express.Respon
   }
 };
 
+export const readCollectionsByCollectionId = async (req: express.Request, res: express.Response) => {
+  try {
+    const collections = await Collection.readCollectionsByCollectionId(parseInt(req.params.collectionId));
+    handleReadResponse(res, collections, successMessage, errorMessage);
+  } catch (err) {
+    handleError(err, res);
+  }
+};
+
 export const readCollectionsByDeveloper = async (req: express.Request, res: express.Response) => {
   try {
     const collections = await Collection.readCollectionsByDeveloper(parseInt(req.params.developerId));

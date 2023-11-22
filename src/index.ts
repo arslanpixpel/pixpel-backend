@@ -16,6 +16,8 @@ const port = 3001;
 const swaggerDoc = require("swagger-ui-express");
 // const fileUpload = require("express-fileupload");
 const pinata = require("./routes/pinata");
+const emailValidate = require('./routes/emailValidate');
+const mobileValidate = require('./routes/mobileValidate');
 // const upload = require("./routes/upload");
 const swaggerDocumentation = require("./helper/Documentation.ts");
 
@@ -35,7 +37,8 @@ app.use("/documentations", swaggerDoc.setup(swaggerDocumentation));
 // );
 // app.use("/", upload);
 app.use("/pinata", pinata);
-
+app.use("/email", emailValidate );
+app.use('/mobile' , mobileValidate);
 app.use("/developers", developerRoutes);
 app.use("/players", playerRoutes);
 app.use("/orders", orderRoutes);

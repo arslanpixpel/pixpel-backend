@@ -11,6 +11,8 @@ import {
   handleUpdateResponse,
   handleDeleteResponse,
 } from "../helper/Responses";
+const jwt = require('jsonwebtoken');
+const secretKey = "your-secret-key"; // Replace with your actual secret key
 
 export const readDeveloper = async (
   req: express.Request,
@@ -71,9 +73,18 @@ export const signupDeveloper = async (
 ) => {
   try {
     const developer = await Developer.signupDeveloper(req.body);
-    res
-      .status(201)
-      .send({ message: "Developer signed up successfully", data: developer });
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: developer.id, email: developer.email },
+      secretKey,
+      { expiresIn: '1d' } // You can adjust the expiration time
+    );
+
+    res.status(201).send({
+      message: "Developer signed up successfully",
+      data: { developer, token },
+    });
   } catch (err) {
     handleError(err, res);
   }
@@ -86,10 +97,19 @@ export const signinDeveloper = async (
   try {
     const { email, password } = req.body;
     const developer = await Developer.signinDeveloper(email, password);
+
     if (developer) {
-      res
-        .status(200)
-        .send({ message: "Developer signed in successfully", data: developer });
+      // Generate JWT token
+      const token = jwt.sign(
+        { userId: developer.id, email: developer.email },
+        secretKey,
+        { expiresIn: '1d' } // You can adjust the expiration time
+      );
+
+      res.status(200).send({
+        message: "Developer signed in successfully",
+        data: { developer, token },
+      });
     } else {
       res.status(401).send({ error: "Invalid email or password" });
     }
