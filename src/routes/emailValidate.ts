@@ -1,24 +1,26 @@
-const route = require('express').Router();
-const nodemailer = require('nodemailer');
-const query = require("../db");
+import express, { Request, Response ,Router } from 'express';
+import nodemailer from 'nodemailer';
+import { query } from '../db';
+import * as Developer from "../models/Developer";
+
 
 // Nodemailer setup
 const emailTransporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'arslandev170@gmail.com', 
+    user: 'arslandev170@gmail.com',
     pass: 'uevf bgmr efwc oczz',
   },
 });
 
+const route = Router();
 
-
-route.post('/verify-email', async (req, res) => {
-  const { id } = req.body;
+route.post('/verify-email', async (req: Request, res: Response) => {
+  const { id , type } = req.body;
 
   try {
     const updatedDeveloper = await query(
-      'UPDATE developers SET verified = $1 WHERE id = $2 RETURNING *',
+      `UPDATE ${type}s SET verified = $1 WHERE id = $2 RETURNING *`,
       [true, id]
     );
 
@@ -33,28 +35,25 @@ route.post('/verify-email', async (req, res) => {
   }
 });
 
-
-
-route.post('/send-otp', async (req, res) => {
+route.post('/send-otp', async (req: Request, res: Response) => {
   const { email } = req.body;
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-
   const mailOptions = {
-    from: 'your-email@gmail.com',
+    from: 'pixpelsupport@pixpel.io',
     to: email,
     subject: 'OTP Verification',
     text: `Your OTP is: ${otp}`,
   };
 
-  emailTransporter.sendMail(mailOptions, (error, info) => {
+  emailTransporter.sendMail(mailOptions, (error:any) => {
     if (error) {
       console.error('Error sending OTP email', error);
       return res.status(500).json({ error: 'Error sending OTP email' });
     }
-    res.json({ message: 'OTP sent to email successfully', otp: otp });
+    res.json({ message: 'OTP sent to email successfully', otp });
   });
 });
 
-module.exports = route;
+export default route;

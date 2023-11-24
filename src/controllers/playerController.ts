@@ -1,5 +1,7 @@
 import express from "express";
 import * as Player from "../models/Player";
+const jwt = require('jsonwebtoken');
+const secretKey = "3650"; // Replace with your actual secret key
 import {
   successMessage,
   errorMessage,
@@ -67,9 +69,16 @@ export const signupPlayer = async (
 ) => {
   try {
     const player = await Player.signupPlayer(req.body);
-    res
-      .status(201)
-      .send({ message: "Player signed up successfully", data: player });
+    const token = jwt.sign(
+      { userId: player.id, email: player.email },
+      secretKey,
+      { expiresIn: '1d' } // You can adjust the expiration time
+    );
+
+    res.status(201).send({
+      message: "player signed up successfully",
+      data: { player, token },
+    });
   } catch (err) {
     handleError(err, res);
   }
@@ -82,10 +91,20 @@ export const signinPlayer = async (
   try {
     const { email, password } = req.body;
     const player = await Player.signinPlayer(email, password);
+
     if (player) {
-      res
-        .status(200)
-        .send({ message: "Player signed in successfully", data: player });
+      console.log(player.id)
+      // Generate JWT token
+      const token = jwt.sign(
+        { userId: player.id, email: player.email },
+        secretKey,
+        { expiresIn: '1d' } // You can adjust the expiration time
+      );
+
+      res.status(200).send({
+        message: "player signed in successfully",
+        data: { player, token },
+      });
     } else {
       res.status(401).send({ error: "Invalid email or password" });
     }

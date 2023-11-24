@@ -12,7 +12,7 @@ import {
   handleDeleteResponse,
 } from "../helper/Responses";
 const jwt = require('jsonwebtoken');
-const secretKey = "your-secret-key"; // Replace with your actual secret key
+const secretKey = "3650"; // Replace with your actual secret key
 
 export const readDeveloper = async (
   req: express.Request,

@@ -9,16 +9,16 @@ import collectionRoutes from "./routes/collectionRoutes";
 import launchpadRoutes from "./routes/launchpadRoutes";
 import tokenreleaseRoutes from "./routes/tokenreleaseRoutes";
 import gamedashboard from "./routes/gamedashboard";
-
+import pinata from './routes/pinata';
+import emailValidate from './routes/emailValidate';
+import mobileValidate from './routes/mobileValidate'
 
 const app = express();
 const port = 3001;
 const swaggerDoc = require("swagger-ui-express");
-// const fileUpload = require("express-fileupload");
-const pinata = require("./routes/pinata");
-const emailValidate = require('./routes/emailValidate');
-const mobileValidate = require('./routes/mobileValidate');
-// const upload = require("./routes/upload");
+// const pinata = require("./routes/pinata");
+// const emailValidate = require('./routes/emailValidate');
+// const mobileValidate = require('./routes/mobileValidate');
 const swaggerDocumentation = require("./helper/Documentation.ts");
 
 app.use(cors());

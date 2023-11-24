@@ -5,7 +5,18 @@ interface Player {
   name: string;
   email: string;
   wallet: string;
+  contact_details: string;
   password: string;
+  verified: string;
+  img: string ;
+  address: string ;
+  dateOfLaunch: string ;
+  country: string ;
+  launchedAtPixpel: string ;
+  legalName: string ;
+  perPercentage: string ;
+  percentage: string ;
+  shareHolders:string
 }
 
 export const readPlayer = async (id: number) => {
@@ -18,16 +29,29 @@ export const readPlayer = async (id: number) => {
   }
 };
 
+// export const updateVerifyPlayer = async (id: number, updates: Partial<Player>) => {
+//   try {
+//     const { verified } = updates;
+
+//     const result = await query(
+//       "UPDATE players SET verified=$1 WHERE id=$2 RETURNING *",
+//       [verified, id]
+//     );
+//     return result.rows[0];
+//   } catch (err) {
+//     const error = err as Error;
+//     throw error;
+//   }
+// };
+
+
 export const updatePlayer = async (id: number, updates: Partial<Player>) => {
   try {
-    const { name, email, wallet, password } = updates;
-    let hashedPassword;
-    if (password) {
-      hashedPassword = await bcrypt.hash(password, 10);
-    }
+    const { name, email, wallet, contact_details, verified, img, address, country, launchedAtPixpel, legalName, perPercentage, percentage, shareHolders } = updates;
+
     const result = await query(
-      "UPDATE players SET name=$1 , email=$2 , wallet=$3 , password=$4 WHERE id=$5 RETURNING *",
-      [name, email, wallet, hashedPassword || null, id]
+      "UPDATE players SET name=$1, email=$2, wallet=$3, contact_details=$4, verified=$5, img=$6, address=$7, country=$8, launchedAtPixpel=$9, legalName=$10, perPercentage=$11, percentage=$12, shareHolders=$13 WHERE id=$14 RETURNING *",
+      [name, email, wallet, contact_details, verified, img, address, country, launchedAtPixpel, legalName, perPercentage, percentage, shareHolders, id]
     );
     return result.rows[0];
   } catch (err) {
@@ -62,14 +86,25 @@ export const signupPlayer = async (player: {
   name: string;
   email: string;
   wallet: string;
+  contact_details: string;
   password: string;
+  verified: string;
+  img: string ;
+  address: string ;
+  dateOfLaunch: string ;
+  country: string ;
+  launchedAtPixpel: string ;
+  legalName: string ;
+  perPercentage: string ;
+  percentage: string ;
+  shareHolders:string
 }) => {
   try {
-    const { name, email, wallet, password } = player;
+    const { name, email, wallet, contact_details, password, img ,address ,country ,launchedAtPixpel ,legalName ,perPercentage ,percentage ,shareHolders  } = player;
     const hashedPassword = await bcrypt.hash(password, 10);
     const result = await query(
-      "INSERT INTO players(name, email, wallet, password) VALUES($1, $2, $3, $4) RETURNING *",
-      [name, email, wallet, hashedPassword]
+      "INSERT INTO players(name, email, wallet, contact_details, password, img, address, country, launchedAtPixpel, legalName, perPercentage, percentage, shareHolders) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *",
+      [name, email, wallet, contact_details, hashedPassword, img ,address ,country ,launchedAtPixpel ,legalName ,perPercentage ,percentage ,shareHolders]
     );
     return result.rows[0];
   } catch (err) {
