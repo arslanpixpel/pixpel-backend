@@ -10,6 +10,18 @@ import { query } from "../db";
 //   collection_id: number;
 // }
 
+interface SubProperty {
+  Name: string;
+  Value: string;
+}
+
+interface Property {
+  [key: string]: {
+    Name: string;
+    Value: string;
+  };
+}
+
 interface Nft {
   name: string;
   description: string;
@@ -18,10 +30,16 @@ interface Nft {
   secondary_owner: string;
   type: "mystery" | "open";
   category: string;
-  img: string,
+  img: string;
   collection_id: number;
   kind: string;
-  properties: Record<string, any>;
+  properties: {
+    [key: string]: {
+      new?: string;
+      dsda?: string;
+      subProperties: Property;
+    };
+  }[];
   blockchain: string;
   supply_quantity: number;
   contact_address: string;
@@ -42,6 +60,8 @@ interface Nft {
     quantity: number;
     duration_hours: number;
   };
+  level: number;
+  sub_category: string;
 }
 
 // export const createNft = async (nft: Nft) => {
@@ -97,6 +117,8 @@ export const createNft = async (nft: Nft) => {
       open_auction,
       fix_price,
       mystery_box,
+      level,
+      sub_category,
     } = nft;
 
     const result = await query(
@@ -120,8 +142,10 @@ export const createNft = async (nft: Nft) => {
         creator_fee,
         open_auction,
         fix_price,
-        mystery_box
-      ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
+        mystery_box,
+        level,
+        sub_category
+      ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)
       RETURNING *
       `,
       [
@@ -135,7 +159,7 @@ export const createNft = async (nft: Nft) => {
         img,
         collection_id,
         kind,
-        properties,
+        JSON.stringify(properties),
         blockchain,
         supply_quantity,
         contact_address,
@@ -145,9 +169,11 @@ export const createNft = async (nft: Nft) => {
         open_auction,
         fix_price,
         mystery_box,
+        level,
+        sub_category,
       ]
     );
-    
+
     return result.rows[0];
   } catch (err) {
     const error = err as Error;
