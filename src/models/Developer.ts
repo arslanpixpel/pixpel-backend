@@ -28,20 +28,20 @@ export const readDeveloper = async (id: number) => {
   }
 };
 
-export const updateVerifyDeveloper = async (id: number, updates: Partial<Developer>) => {
-  try {
-    const { verified } = updates;
+// export const updateVerifyDeveloper = async (id: number, updates: Partial<Developer>) => {
+//   try {
+//     const { verified } = updates;
 
-    const result = await query(
-      "UPDATE developers SET verified=$1 WHERE id=$2 RETURNING *",
-      [verified, id]
-    );
-    return result.rows[0];
-  } catch (err) {
-    const error = err as Error;
-    throw error;
-  }
-};
+//     const result = await query(
+//       "UPDATE developers SET verified=$1 WHERE id=$2 RETURNING *",
+//       [verified, id]
+//     );
+//     return result.rows[0];
+//   } catch (err) {
+//     const error = err as Error;
+//     throw error;
+//   }
+// };
 
 export const updateDeveloper = async (id: number, updates: Partial<Developer>) => {
   try {
