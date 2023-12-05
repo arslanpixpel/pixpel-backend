@@ -3,7 +3,8 @@ import { Pool } from "pg";
 const pool = new Pool({
   user: "postgres",
   host: "127.0.0.1",
-  database: "postgres",
+  database: "postgres",  //LOCAL
+  // database: "Pixpel-backend", // SERVER
   password: "ubuntu",
   port: 5432,
 });
@@ -96,7 +97,7 @@ createTable(
 
 createTable(
   "nfts",
-  "id SERIAL PRIMARY KEY, name TEXT NOT NULL, description TEXT NOT NULL, royalty_commission INTEGER NOT NULL, primary_owner TEXT NOT NULL, secondary_owner TEXT NOT NULL, type TEXT NOT NULL, category TEXT NOT NULL, img TEXT NOT NULL ,collection_id INTEGER NOT NULL REFERENCES collections(id), kind TEXT NOT NULL, properties JSONB NOT NULL, blockchain TEXT NOT NULL, supply_quantity INTEGER NOT NULL, contact_address TEXT NOT NULL, token_id TEXT NOT NULL, token_standard TEXT NOT NULL, creator_fee TEXT NOT NULL, open_auction JSONB, fix_price JSONB, mystery_box JSONB, level INTEGER NOT NULL, sub_category TEXT NOT NULL"
+  "id SERIAL PRIMARY KEY, name TEXT NOT NULL, description TEXT NOT NULL, royalty_commission INTEGER NOT NULL, primary_owner TEXT NOT NULL, secondary_owner TEXT[], type TEXT NOT NULL, category TEXT NOT NULL, img TEXT NOT NULL ,collection_id INTEGER NOT NULL REFERENCES collections(id), kind TEXT NOT NULL, properties JSONB NOT NULL, blockchain TEXT NOT NULL, supply_quantity INTEGER NOT NULL, contact_address TEXT NOT NULL, token_id TEXT NOT NULL, token_standard TEXT NOT NULL, creator_fee TEXT NOT NULL, open_auction JSONB, fix_price JSONB, mystery_box JSONB, level INTEGER NOT NULL, sub_category TEXT NOT NULL"
 );
 
 createTable(

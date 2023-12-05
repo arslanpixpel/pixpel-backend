@@ -26,6 +26,21 @@ export const readDeveloper = async (
   }
 };
 
+export const updateDeveloperImg = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const developer = await Developer.updateDeveloperImage(
+      parseInt(req.params.id),
+      req.body
+    );
+    handleUpdateResponse(res, developer, successMessage, errorMessage);
+  } catch (err) {
+    handleError(err, res);
+  }
+};
+
 export const updateDeveloper = async (
   req: express.Request,
   res: express.Response

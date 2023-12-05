@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/read/:id", developerController.readDeveloper);
 router.put("/update/:id", developerController.updateDeveloper);
+router.put("/updateImg/:id", developerController.updateDeveloperImg);
 router.delete("/delete/:id", developerController.deleteDeveloper);
 router.get("/getAll", developerController.getAllDevelopers);
 router.post("/signup", developerController.signupDeveloper);

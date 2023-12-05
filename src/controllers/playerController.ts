@@ -26,6 +26,21 @@ export const readPlayer = async (
   }
 };
 
+export const updatePlayerImg = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const player = await Player.updatePlayerImage(
+      parseInt(req.params.id),
+      req.body
+    );
+    handleUpdateResponse(res, player, successMessage, errorMessage);
+  } catch (err) {
+    handleError(err, res);
+  }
+};
+
 export const updatePlayer = async (
   req: express.Request,
   res: express.Response

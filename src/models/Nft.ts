@@ -27,7 +27,7 @@ interface Nft {
   description: string;
   royalty_commission: number;
   primary_owner: string;
-  secondary_owner: string;
+  secondary_owner: string[];
   type: "mystery" | "open";
   category: string;
   img: string;
@@ -313,6 +313,35 @@ export const deleteNft = async (name: string) => {
 export const getAllNfts = async () => {
   try {
     const result = await query("SELECT * FROM nfts", []);
+    return result.rows;
+  } catch (err) {
+    const error = err as Error;
+    throw error;
+  }
+};
+
+export const buyNft = async (nftId: number, buyerAddress: string) => {
+  try {
+    const result = await query(
+      `UPDATE nfts
+       SET secondary_owner = array_append(COALESCE(secondary_owner, ARRAY[]::TEXT[]), $1)
+       WHERE id = $2
+       RETURNING *`,
+      [buyerAddress, nftId]
+    );
+
+    return result.rows[0];
+  } catch (err) {
+    const error = err as Error;
+    throw error;
+  }
+};
+
+export const getNftsByCollectionId = async (collectionId: number) => {
+  try {
+    const result = await query("SELECT * FROM nfts WHERE collection_id = $1", [
+      collectionId,
+    ]);
     return result.rows;
   } catch (err) {
     const error = err as Error;

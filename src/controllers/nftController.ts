@@ -68,3 +68,41 @@ export const getAllNfts = async (
     handleError(err, res);
   }
 };
+
+export const buyNft = async (req: express.Request, res: express.Response) => {
+  const nftId = req.body.id;
+  const buyerAddress = req.body.buyerAddress;
+
+  // if (!nftId || !buyerAddress) {
+  //   return res.status(400).json({ error: "Invalid request parameters" });
+  // }
+
+  try {
+    const updatedNft = await Nft.buyNft(nftId, buyerAddress);
+    if (!updatedNft) {
+      return res.status(404).json({ error: "NFT not found" });
+    }
+    handleCreateResponse(res, updatedNft, successMessage, errorMessage); // Use either this line or the next line, not both
+    // res.json(updatedNft); // Remove this line
+  } catch (err) {
+    handleError(err, res);
+  }
+};
+
+export const getNftsByCollectionId = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const collectionId = Number(req.params.collectionid);
+    const nfts = await Nft.getNftsByCollectionId(collectionId);
+    handleCreateResponse(
+      res,
+      nfts,
+      "NFT list of your collection",
+      errorMessage
+    );
+  } catch (err) {
+    handleError(err, res);
+  }
+};
