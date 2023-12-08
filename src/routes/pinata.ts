@@ -52,7 +52,7 @@ route.post('/addJson', async (req: Request, res: Response) => {
     };
    
     try{
-      const result = await pinata.pinJSONToIPFS({ pinataContent: jsonContent });
+      const result = await pinata.pinJSONToIPFS({ pinataContent: jsonContent, options: options });
       console.log("SDK Result: ", result);
   
       // const readableStream = new Readable();

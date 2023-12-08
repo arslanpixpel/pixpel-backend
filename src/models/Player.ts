@@ -29,21 +29,20 @@ export const readPlayer = async (id: number) => {
   }
 };
 
-// export const updateVerifyPlayer = async (id: number, updates: Partial<Player>) => {
-//   try {
-//     const { verified } = updates;
+export const updatePlayerImage = async (id: number, updates: Partial<Player>) => {
+  try {
+    const { img } = updates;
 
-//     const result = await query(
-//       "UPDATE players SET verified=$1 WHERE id=$2 RETURNING *",
-//       [verified, id]
-//     );
-//     return result.rows[0];
-//   } catch (err) {
-//     const error = err as Error;
-//     throw error;
-//   }
-// };
-
+    const result = await query(
+      "UPDATE players SET img=$1 WHERE id=$2 RETURNING *",
+      [img, id]
+    );
+    return result.rows[0];
+  } catch (err) {
+    const error = err as Error;
+    throw error;
+  }
+};
 
 export const updatePlayer = async (id: number, updates: Partial<Player>) => {
   try {
