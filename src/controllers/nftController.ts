@@ -72,19 +72,34 @@ export const getAllNfts = async (
 export const buyNft = async (req: express.Request, res: express.Response) => {
   const nftId = req.body.id;
   const buyerAddress = req.body.buyerAddress;
+  const insurance = req.body.insurance;
+  const insurance_time = req.body.insurance_time;
+  const currentDate = new Date();
+  const insurance_expiryDate = new Date(currentDate.getTime() + insurance_time);
 
-  // if (!nftId || !buyerAddress) {
-  //   return res.status(400).json({ error: "Invalid request parameters" });
-  // }
+  console.log(req.body, "payload");
+
+  // Input Validation
+  if (!nftId || !buyerAddress) {
+    return res.status(400).json({ error: "Invalid request parameters" });
+  }
 
   try {
-    const updatedNft = await Nft.buyNft(nftId, buyerAddress);
+    const updatedNft = await Nft.buyNft(
+      nftId,
+      buyerAddress,
+      insurance,
+      insurance_expiryDate
+    );
+
     if (!updatedNft) {
       return res.status(404).json({ error: "NFT not found" });
     }
-    handleCreateResponse(res, updatedNft, successMessage, errorMessage); // Use either this line or the next line, not both
-    // res.json(updatedNft); // Remove this line
+
+    // Handle success response
+    handleCreateResponse(res, updatedNft, successMessage, errorMessage);
   } catch (err) {
+    // Handle errors
     handleError(err, res);
   }
 };

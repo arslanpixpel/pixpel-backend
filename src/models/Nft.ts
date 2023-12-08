@@ -22,12 +22,18 @@ interface Property {
   };
 }
 
+interface Secondaryowner {
+  wallet: string;
+  insurance: boolean;
+  insurance_expirydate: any;
+}
+
 interface Nft {
   name: string;
   description: string;
   royalty_commission: number;
   primary_owner: string;
-  secondary_owner: string[];
+  secondary_owner: Secondaryowner[];
   type: "mystery" | "open";
   category: string;
   img: string;
@@ -62,6 +68,7 @@ interface Nft {
   };
   level: number;
   sub_category: string;
+  insurance_per_hour: number;
 }
 
 // export const createNft = async (nft: Nft) => {
@@ -119,6 +126,7 @@ export const createNft = async (nft: Nft) => {
       mystery_box,
       level,
       sub_category,
+      insurance_per_hour,
     } = nft;
 
     const result = await query(
@@ -144,8 +152,9 @@ export const createNft = async (nft: Nft) => {
         fix_price,
         mystery_box,
         level,
-        sub_category
-      ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)
+        sub_category,
+        insurance_per_hour
+      ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
       RETURNING *
       `,
       [
@@ -171,6 +180,7 @@ export const createNft = async (nft: Nft) => {
         mystery_box,
         level,
         sub_category,
+        insurance_per_hour,
       ]
     );
 
@@ -320,14 +330,21 @@ export const getAllNfts = async () => {
   }
 };
 
-export const buyNft = async (nftId: number, buyerAddress: string) => {
+export const buyNft = async (
+  nftId: number,
+  buyerAddress: string,
+  insurance: boolean,
+  insurance_expiryDate: Date
+) => {
   try {
     const result = await query(
       `UPDATE nfts
-       SET secondary_owner = array_append(COALESCE(secondary_owner, ARRAY[]::TEXT[]), $1)
-       WHERE id = $2
+       SET
+         secondary_owner = COALESCE(secondary_owner, '{}'::jsonb[]) || 
+                           jsonb_build_object('wallet', $1::TEXT, 'insurance', $2::BOOLEAN, 'insurance_expirydate', $3::Date)
+       WHERE id = $4
        RETURNING *`,
-      [buyerAddress, nftId]
+      [buyerAddress, insurance, insurance_expiryDate, nftId]
     );
 
     return result.rows[0];
