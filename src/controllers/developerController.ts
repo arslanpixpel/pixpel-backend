@@ -26,6 +26,18 @@ export const readDeveloper = async (
   }
 };
 
+export const readDeveloperByWallet = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const developer = await Developer.readDeveloperByWallet(req.body.wallet);
+    handleReadResponse(res, developer, successMessage, errorMessage);
+  } catch (err) {
+    handleError(err, res);
+  }
+};
+
 export const updateDeveloperImg = async (
   req: express.Request,
   res: express.Response

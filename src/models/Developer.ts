@@ -28,6 +28,16 @@ export const readDeveloper = async (id: number) => {
   }
 };
 
+export const readDeveloperByWallet = async (wallet: string | any) => {
+  try {
+    const result = await query("SELECT * FROM developers WHERE wallet = $1", [wallet]);
+    return result.rows[0];
+  } catch (err) {
+    const error = err as Error;
+    throw error;
+  }
+};
+
 export const updateDeveloperImage = async (id: number, updates: Partial<Developer>) => {
   try {
     const { img } = updates;

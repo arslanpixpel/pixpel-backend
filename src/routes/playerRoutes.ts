@@ -4,6 +4,7 @@ import * as playerController from "../controllers/playerController";
 const router = express.Router();
 
 router.get("/read/:id", playerController.readPlayer);
+router.post("/wallet", playerController.readPlayerWallet);
 router.put("/update/:id", playerController.updatePlayer);
 router.put("/updateImg/:id", playerController.updatePlayerImg);
 router.delete("/delete/:id", playerController.deletePlayer);

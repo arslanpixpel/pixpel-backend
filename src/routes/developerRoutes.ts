@@ -4,6 +4,7 @@ import * as developerController from "../controllers/developerController";
 const router = express.Router();
 
 router.get("/read/:id", developerController.readDeveloper);
+router.post("/wallet", developerController.readDeveloperByWallet);
 router.put("/update/:id", developerController.updateDeveloper);
 router.put("/updateImg/:id", developerController.updateDeveloperImg);
 router.delete("/delete/:id", developerController.deleteDeveloper);
