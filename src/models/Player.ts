@@ -29,6 +29,16 @@ export const readPlayer = async (id: number) => {
   }
 };
 
+export const emailChecker = async (email: string | any) => {
+  try {
+    const result = await query("SELECT * FROM players WHERE email = $1", [email]);
+    return result.rows[0];
+  } catch (err) {
+    const error = err as Error;
+    throw error;
+  }
+};
+
 export const readPlayerByWallet = async (wallet: string) => {
   try {
     const result = await query("SELECT * FROM players WHERE wallet = $1", [wallet]);

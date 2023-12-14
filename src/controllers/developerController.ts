@@ -38,6 +38,19 @@ export const readDeveloperByWallet = async (
   }
 };
 
+export const readDeveloperByEmail = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const developer = await Developer.readDeveloperByEmail(req.body.email);
+    handleReadResponse(res, developer, successMessage, errorMessage);
+  } catch (err) {
+    handleError(err, res);
+  }
+};
+
+
 export const updateDeveloperImg = async (
   req: express.Request,
   res: express.Response

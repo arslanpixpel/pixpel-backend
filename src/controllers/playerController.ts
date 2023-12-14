@@ -41,6 +41,21 @@ export const readPlayerWallet = async (
   }
 };
 
+export const emailCheck = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  const { email } = req.body;
+  try {
+    const player = await Player.emailChecker(email);
+    // res.status(200).send(player);
+    handleReadResponse(res, player, successMessage, errorMessage);
+  } catch (err) {
+    res.send(err);
+    handleError(err, res);
+  }
+};
+
 export const updatePlayerImg = async (
   req: express.Request,
   res: express.Response
