@@ -9,8 +9,8 @@ const emailTransporter = nodemailer.createTransport({
   auth: {
     // user: 'arslandev170@gmail.com',
     // pass: 'uevf bgmr efwc oczz',
-    user: "arslankhan@pixpel.io",
-    pass: "orgj smjo moaj mrox",
+    user: "support@pixpel.io",
+    pass: "rbhh prlv qrdi mykh",
   },
 });
 
